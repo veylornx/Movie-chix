@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Open Reel – Free public domain films</title>
+  <meta name="description" content="Watch and download public domain films for free.">
+
+  <!-- Fonts: Fraunces (headings) + Instrument Sans (body). Fallbacks are defined in style.css -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+
+  <!-- ===== Header ===== -->
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="/">Open Reel</a>
+      <nav aria-label="Main">
+        <a href="#catalog">Films</a>
+        <a href="#about">About</a>
+      </nav>
+    </div>
+    <!-- Decorative film-strip edge (pure CSS) -->
+    <div class="filmstrip" aria-hidden="true"></div>
+  </header>
+
+  <main>
+    <!-- ===== Hero + search ===== -->
+    <section class="hero wrap">
+      <h1>Films anyone can watch, keep and share.</h1>
+      <p class="lede">Public domain and freely licensed movies, streamed or downloaded straight from the Internet Archive.</p>
+
+      <form class="search" role="search" onsubmit="return false">
+        <label for="search" class="visually-hidden">Search films</label>
+        <input id="search" type="search" placeholder="Search by title, year or director" autocomplete="off">
+      </form>
+    </section>
+
+    <!-- ===== Catalog grid ===== -->
+    <section id="catalog" class="wrap" aria-labelledby="catalog-heading">
+      <div class="catalog-head">
+        <h2 id="catalog-heading">Catalog</h2>
+        <!-- aria-live so screen readers hear the result count change -->
+        <p id="result-count" aria-live="polite"></p>
+      </div>
+
+      <div id="movie-grid" class="grid"></div>
+
+      <p id="empty-state" class="empty" hidden>
+        No films match that search. Try a shorter title or a different year.
+      </p>
+    </section>
+
+    <!-- ===== About ===== -->
+    <section id="about" class="wrap about">
+      <h2>About this directory</h2>
+      <p>
+        Open Reel only lists films that are in the public domain or released under a license that allows free sharing.
+        Copyright rules differ between countries, so check a film's status where you live before reusing it.
+        Every title links to its page on the Internet Archive, where the original rights information is shown.
+      </p>
+    </section>
+  </main>
+
+  <!-- ===== Player dialog (opened by the Watch buttons) ===== -->
+  <dialog id="player" aria-labelledby="player-title">
+    <div class="player-bar">
+      <h2 id="player-title"></h2>
+      <button id="player-close" type="button" aria-label="Close player">Close</button>
+    </div>
+    <iframe id="player-frame" title="Film player" allowfullscreen loading="lazy"></iframe>
+  </dialog>
+
+  <!-- ===== Footer ===== -->
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Films and posters are hosted by the <a href="https://archive.org" target="_blank" rel="noopener">Internet Archive</a>. Open Reel does not store any video files.</p>
+      <p>&copy; <span id="year"></span> Open Reel</p>
+    </div>
+  </footer>
+
+</body>
+</html>
