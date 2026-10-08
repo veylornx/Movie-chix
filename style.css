@@ -1,0 +1,352 @@
+/* ==========================================================
+   Open Reel – dark theme
+   Palette: ink-blue backgrounds, bone-white text, one warm
+   "projector lamp" accent used only for focus and key actions.
+   ========================================================== */
+
+:root {
+  --bg: #0f1420;
+  --surface: #182033;
+  --surface-hover: #1f2a42;
+  --line: #28324b;
+  --text: #ece8df;
+  --muted: #9aa3b8;
+  --accent: #f2b552;
+  --accent-ink: #1a1305;
+
+  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-body: "Instrument Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  --radius: 10px;
+  --max-width: 1180px;
+}
+
+/* ---------- Reset & base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { display: block; max-width: 100%; }
+
+a { color: inherit; }
+
+/* Layout container used by every section */
+.wrap {
+  width: 100%;
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+/* Visible keyboard focus everywhere */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* Text for screen readers only */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---------- Header ---------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(15, 20, 32, 0.92);
+  backdrop-filter: blur(8px);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 0.9rem;
+}
+
+.brand {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.4rem;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+}
+
+.site-header nav { display: flex; gap: 1.5rem; }
+
+.site-header nav a {
+  color: var(--muted);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.site-header nav a:hover { color: var(--text); }
+
+/* Film-strip edge: a row of small "sprocket holes" */
+.filmstrip {
+  height: 10px;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 10px,
+      var(--bg) 10px 22px,
+      transparent 22px 32px
+    ),
+    var(--line);
+}
+
+/* ---------- Hero ---------- */
+.hero { padding-block: 3.5rem 2rem; }
+
+.hero h1 {
+  max-width: 16ch;
+  margin: 0 0 1rem;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2.2rem, 6vw, 4rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.lede {
+  max-width: 52ch;
+  margin: 0 0 1.75rem;
+  color: var(--muted);
+  font-size: 1.1rem;
+}
+
+.search { max-width: 560px; }
+
+.search input {
+  width: 100%;
+  padding: 0.95rem 1.1rem;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  font: inherit;
+  font-size: 1.05rem;
+}
+
+.search input::placeholder { color: var(--muted); }
+
+.search input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(242, 181, 82, 0.25);
+}
+
+/* ---------- Catalog ---------- */
+.catalog-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block: 1.5rem 1rem;
+  border-top: 1px solid var(--line);
+}
+
+.catalog-head h2,
+.about h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+}
+
+#result-count { margin: 0; color: var(--muted); font-size: 0.95rem; }
+
+/* Responsive grid: as many columns as fit, never narrower than 160px */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1.25rem;
+}
+
+@media (min-width: 700px) {
+  .grid { grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 1.5rem; }
+}
+
+/* ---------- Movie card ---------- */
+.card {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.card:hover { background: var(--surface-hover); border-color: #3a4666; }
+
+/* The poster doubles as a button that opens the player */
+.poster-btn {
+  display: block;
+  padding: 0;
+  border: 0;
+  background: var(--bg);
+  cursor: pointer;
+  aspect-ratio: 2 / 3;
+  width: 100%;
+}
+
+.poster-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Shown when a poster image fails to load */
+.poster-fallback {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  padding: 1rem;
+  background: linear-gradient(160deg, #1d2740, #121827);
+  color: var(--muted);
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  text-align: center;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 0.35rem;
+  padding: 0.9rem;
+}
+
+.card h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  line-height: 1.25;
+}
+
+.year { margin: 0; color: var(--accent); font-weight: 600; font-size: 0.9rem; }
+.director { margin: 0; color: var(--muted); font-size: 0.9rem; }
+
+/* Description is clamped to 3 lines so cards stay even */
+.desc {
+  margin: 0.25rem 0 0.5rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: auto; /* pins buttons to the bottom of every card */
+}
+
+.btn {
+  flex: 1;
+  padding: 0.55rem 0.5rem;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn:hover { border-color: var(--muted); }
+
+.btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+
+.btn-primary:hover { filter: brightness(1.08); border-color: var(--accent); }
+
+.empty {
+  padding: 3rem 0;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* ---------- About ---------- */
+.about { padding-block: 3.5rem; }
+.about p { max-width: 65ch; color: var(--muted); }
+
+/* ---------- Player dialog ---------- */
+dialog {
+  width: min(960px, 94vw);
+  padding: 0;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+dialog::backdrop { background: rgba(5, 8, 14, 0.8); }
+
+.player-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+}
+
+.player-bar h2 { margin: 0; font-family: var(--font-display); font-size: 1.1rem; }
+
+.player-bar button {
+  padding: 0.4rem 0.9rem;
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font: inherit;
+  cursor: pointer;
+}
+
+#player-frame {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+  background: #000;
+}
+
+/* ---------- Footer ---------- */
+.site-footer {
+  padding-block: 2rem;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.site-footer p { margin: 0.25rem 0; }
+
+/* ---------- Motion preferences ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .card { transition: none; }
+  }
